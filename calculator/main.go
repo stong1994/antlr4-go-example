@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	input := antlr.NewInputStream("2+(--4)")
+	input := antlr.NewInputStream("2--4)")
 	lexer := NewcalculatorLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	parser := NewcalculatorParser(stream)
