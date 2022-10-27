@@ -6,15 +6,15 @@ import (
 )
 
 func main() {
-	input := antlr.NewInputStream("2+4")
+	input := antlr.NewInputStream("2--4")
 	lexer := Newlisten_errLexer(input)
-	errListener := &ErrListener{}
-	lexer.RemoveErrorListeners() // 默认会使用ConsoleErrorListenerINSTANCE，需要移除。
-	lexer.AddErrorListener(errListener)
 
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 	parser := Newlisten_errParser(stream)
-
+	errListener := &ErrListener{}
+	parser.RemoveErrorListeners() // 默认会使用ConsoleErrorListener，需要移除。
+	parser.AddErrorListener(errListener)
+	parser.GetInterpreter().SetPredictionMode(antlr.PredictionModeLLExactAmbigDetection)
 	antlr.ParseTreeWalkerDefault.Walk(&Baselisten_errListener{}, parser.Stat())
 
 	errListener.Print()

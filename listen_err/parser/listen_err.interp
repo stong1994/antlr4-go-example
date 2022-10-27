@@ -1,12 +1,12 @@
 token literal names:
 null
-'+'
+'-'
 null
 null
 
 token symbolic names:
 null
-ADD
+SUB
 INT
 WS
 

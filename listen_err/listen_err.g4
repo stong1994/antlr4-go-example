@@ -2,12 +2,11 @@ grammar listen_err;
 
 stat : expr;
 
-expr
-     : expr ADD expr # add
-     | INT # num
+expr : expr '-' expr
+     | INT
      ;
 
-ADD : '+' ;
+SUB : '-' ;
 
-INT  : [0-9]+ ;
+INT  : [0-9]+ | '-' [0-9]+ ;
 WS : [ \t\r\n]+ -> skip ;

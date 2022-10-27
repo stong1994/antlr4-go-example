@@ -11,18 +11,12 @@ type listen_errListener interface {
 	// EnterStat is called when entering the stat production.
 	EnterStat(c *StatContext)
 
-	// EnterAdd is called when entering the add production.
-	EnterAdd(c *AddContext)
-
-	// EnterNum is called when entering the num production.
-	EnterNum(c *NumContext)
+	// EnterExpr is called when entering the expr production.
+	EnterExpr(c *ExprContext)
 
 	// ExitStat is called when exiting the stat production.
 	ExitStat(c *StatContext)
 
-	// ExitAdd is called when exiting the add production.
-	ExitAdd(c *AddContext)
-
-	// ExitNum is called when exiting the num production.
-	ExitNum(c *NumContext)
+	// ExitExpr is called when exiting the expr production.
+	ExitExpr(c *ExprContext)
 }

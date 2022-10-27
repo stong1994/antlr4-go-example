@@ -33,10 +33,10 @@ var listen_errParserStaticData struct {
 func listen_errParserInit() {
 	staticData := &listen_errParserStaticData
 	staticData.literalNames = []string{
-		"", "'+'",
+		"", "'-'",
 	}
 	staticData.symbolicNames = []string{
-		"", "ADD", "INT", "WS",
+		"", "SUB", "INT", "WS",
 	}
 	staticData.ruleNames = []string{
 		"stat", "expr",
@@ -88,7 +88,7 @@ func Newlisten_errParser(input antlr.TokenStream) *listen_errParser {
 // listen_errParser tokens.
 const (
 	listen_errParserEOF = antlr.TokenEOF
-	listen_errParserADD = 1
+	listen_errParserSUB = 1
 	listen_errParserINT = 2
 	listen_errParserWS  = 3
 )
@@ -243,37 +243,11 @@ func NewExprContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 
 func (s *ExprContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ExprContext) CopyFrom(ctx *ExprContext) {
-	s.BaseParserRuleContext.CopyFrom(ctx.BaseParserRuleContext)
+func (s *ExprContext) INT() antlr.TerminalNode {
+	return s.GetToken(listen_errParserINT, 0)
 }
 
-func (s *ExprContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExprContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-type AddContext struct {
-	*ExprContext
-}
-
-func NewAddContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AddContext {
-	var p = new(AddContext)
-
-	p.ExprContext = NewEmptyExprContext()
-	p.parser = parser
-	p.CopyFrom(ctx.(*ExprContext))
-
-	return p
-}
-
-func (s *AddContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *AddContext) AllExpr() []IExprContext {
+func (s *ExprContext) AllExpr() []IExprContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
@@ -294,7 +268,7 @@ func (s *AddContext) AllExpr() []IExprContext {
 	return tst
 }
 
-func (s *AddContext) Expr(i int) IExprContext {
+func (s *ExprContext) Expr(i int) IExprContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
@@ -314,53 +288,27 @@ func (s *AddContext) Expr(i int) IExprContext {
 	return t.(IExprContext)
 }
 
-func (s *AddContext) ADD() antlr.TerminalNode {
-	return s.GetToken(listen_errParserADD, 0)
+func (s *ExprContext) SUB() antlr.TerminalNode {
+	return s.GetToken(listen_errParserSUB, 0)
 }
 
-func (s *AddContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(listen_errListener); ok {
-		listenerT.EnterAdd(s)
-	}
-}
-
-func (s *AddContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(listen_errListener); ok {
-		listenerT.ExitAdd(s)
-	}
-}
-
-type NumContext struct {
-	*ExprContext
-}
-
-func NewNumContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *NumContext {
-	var p = new(NumContext)
-
-	p.ExprContext = NewEmptyExprContext()
-	p.parser = parser
-	p.CopyFrom(ctx.(*ExprContext))
-
-	return p
-}
-
-func (s *NumContext) GetRuleContext() antlr.RuleContext {
+func (s *ExprContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *NumContext) INT() antlr.TerminalNode {
-	return s.GetToken(listen_errParserINT, 0)
+func (s *ExprContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *NumContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExprContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(listen_errListener); ok {
-		listenerT.EnterNum(s)
+		listenerT.EnterExpr(s)
 	}
 }
 
-func (s *NumContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExprContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(listen_errListener); ok {
-		listenerT.ExitNum(s)
+		listenerT.ExitExpr(s)
 	}
 }
 
@@ -399,10 +347,6 @@ func (p *listen_errParser) expr(_p int) (localctx IExprContext) {
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
-	localctx = NewNumContext(p, localctx)
-	p.SetParserRuleContext(localctx)
-	_prevctx = localctx
-
 	{
 		p.SetState(7)
 		p.Match(listen_errParserINT)
@@ -419,7 +363,7 @@ func (p *listen_errParser) expr(_p int) (localctx IExprContext) {
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			localctx = NewAddContext(p, NewExprContext(p, _parentctx, _parentState))
+			localctx = NewExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, listen_errParserRULE_expr)
 			p.SetState(9)
 
@@ -428,7 +372,7 @@ func (p *listen_errParser) expr(_p int) (localctx IExprContext) {
 			}
 			{
 				p.SetState(10)
-				p.Match(listen_errParserADD)
+				p.Match(listen_errParserSUB)
 			}
 			{
 				p.SetState(11)
