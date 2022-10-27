@@ -55,6 +55,10 @@ func (c *calcListener) ExitAddSub(ctx *AddSubContext) {
 	}
 }
 
+func (c *calcListener) ExitNegNum(ctx *NegNumContext) {
+	c.push(0 - c.pop())
+}
+
 // ExitId is called when production id is exited.
 func (c *calcListener) ExitNum(ctx *NumContext) {
 	n, err := strconv.Atoi(ctx.GetText())

@@ -23,6 +23,9 @@ type calculatorListener interface {
 	// EnterNum is called when entering the num production.
 	EnterNum(c *NumContext)
 
+	// EnterNegNum is called when entering the NegNum production.
+	EnterNegNum(c *NegNumContext)
+
 	// ExitStat is called when exiting the stat production.
 	ExitStat(c *StatContext)
 
@@ -37,4 +40,7 @@ type calculatorListener interface {
 
 	// ExitNum is called when exiting the num production.
 	ExitNum(c *NumContext)
+
+	// ExitNegNum is called when exiting the NegNum production.
+	ExitNegNum(c *NegNumContext)
 }

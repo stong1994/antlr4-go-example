@@ -50,3 +50,9 @@ func (s *BasecalculatorListener) EnterNum(ctx *NumContext) {}
 
 // ExitNum is called when production num is exited.
 func (s *BasecalculatorListener) ExitNum(ctx *NumContext) {}
+
+// EnterNegNum is called when production NegNum is entered.
+func (s *BasecalculatorListener) EnterNegNum(ctx *NegNumContext) {}
+
+// ExitNegNum is called when production NegNum is exited.
+func (s *BasecalculatorListener) ExitNegNum(ctx *NegNumContext) {}
