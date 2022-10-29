@@ -187,18 +187,6 @@ func (s *StatContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) s
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *StatContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.EnterStat(s)
-	}
-}
-
-func (s *StatContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.ExitStat(s)
-	}
-}
-
 func (p *calculatorParser) Stat() (localctx IStatContext) {
 	this := p
 	_ = this
@@ -332,18 +320,6 @@ func (s *ParensContext) Expr() IExprContext {
 	return t.(IExprContext)
 }
 
-func (s *ParensContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.EnterParens(s)
-	}
-}
-
-func (s *ParensContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.ExitParens(s)
-	}
-}
-
 type MulDivContext struct {
 	*ExprContext
 	a     IExprContext
@@ -429,18 +405,6 @@ func (s *MulDivContext) MUL() antlr.TerminalNode {
 
 func (s *MulDivContext) DIV() antlr.TerminalNode {
 	return s.GetToken(calculatorParserDIV, 0)
-}
-
-func (s *MulDivContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.EnterMulDiv(s)
-	}
-}
-
-func (s *MulDivContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.ExitMulDiv(s)
-	}
 }
 
 type AddSubContext struct {
@@ -530,18 +494,6 @@ func (s *AddSubContext) SUB() antlr.TerminalNode {
 	return s.GetToken(calculatorParserSUB, 0)
 }
 
-func (s *AddSubContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.EnterAddSub(s)
-	}
-}
-
-func (s *AddSubContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.ExitAddSub(s)
-	}
-}
-
 type NumContext struct {
 	*ExprContext
 	_INT antlr.Token
@@ -567,18 +519,6 @@ func (s *NumContext) GetRuleContext() antlr.RuleContext {
 
 func (s *NumContext) INT() antlr.TerminalNode {
 	return s.GetToken(calculatorParserINT, 0)
-}
-
-func (s *NumContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.EnterNum(s)
-	}
-}
-
-func (s *NumContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(calculatorListener); ok {
-		listenerT.ExitNum(s)
-	}
 }
 
 func (p *calculatorParser) Expr() (localctx IExprContext) {
