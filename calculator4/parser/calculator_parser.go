@@ -779,7 +779,14 @@ func (p *calculatorParser) expr(_p int) (localctx IExprContext) {
 						return localctx.(*AddSubContext).GetOp().GetTokenType()
 					}
 				}()), localctx.(*AddSubContext).GetA().GetValue(), localctx.(*AddSubContext).GetB().GetValue())
-				fmt.Printf("%d %s %d = %d\n", localctx.(*AddSubContext).GetA().GetValue(), (func() string {
+				fmt.Printf("got %s\n", (func() string {
+					if localctx.(*AddSubContext).GetOp() == nil {
+						return ""
+					} else {
+						return localctx.(*AddSubContext).GetOp().GetText()
+					}
+				}()))
+				fmt.Printf("calculating:\t%d %s %d = %d\n", localctx.(*AddSubContext).GetA().GetValue(), (func() string {
 					if localctx.(*AddSubContext).GetOp() == nil {
 						return ""
 					} else {

@@ -29,7 +29,8 @@ expr returns [int value]
      | a=expr op=('+'|'-') b=expr
      {
      $ctx.value = handleExpr($op.type, $a.value, $b.value)
-     fmt.Printf("%d %s %d = %d\n",$a.value, $op.text, $b.value, $ctx.value)
+     fmt.Printf("got %s\n", $op.text)
+     fmt.Printf("calculating:\t%d %s %d = %d\n",$a.value, $op.text, $b.value, $ctx.value)
      }
      # AddSub
      | '(' expr ')'
